@@ -1,0 +1,13 @@
+958400,::1,GET,http://localhost/Symfony3/web/app_dev.php/,1524473615,,200
+d96c5c,::1,GET,http://localhost/Symfony3/web/app_dev.php/_profiler,1524473869,,301
+926677,::1,GET,http://localhost/Symfony3/web/app_dev.php/fdsf,1524473921,8adf4d,200
+8adf4d,::1,GET,http://localhost/Symfony3/web/app_dev.php/fdsf,1524473922,,404
+0229f2,::1,GET,http://localhost/Symfony3/web/app_dev.php/fdsf,1524473961,8b9823,200
+8b9823,::1,GET,http://localhost/Symfony3/web/app_dev.php/fdsf,1524473961,,404
+26c787,::1,GET,http://localhost/Symfony3/web/app_dev.php/,1524473968,,200
+29dc69,::1,GET,http://localhost/Symfony3/web/app_dev.php/,1524474517,,200
+b92b48,::1,GET,http://localhost/Symfony3/web/app_dev.php/,1524474572,,200
+8f94d2,::1,GET,http://localhost/Symfony3/web/app_dev.php/hello-world,1524475150,,200
+abdbd4,::1,GET,http://localhost/Symfony3/web/app_dev.php/hello-world,1524475616,,200
+bf7012,::1,GET,http://localhost/Symfony3/web/app_dev.php/hello-world,1524475698,,200
+69fd8a,::1,GET,http://localhost/Symfony3/web/app_dev.php/hello-world,1524475872,,200
