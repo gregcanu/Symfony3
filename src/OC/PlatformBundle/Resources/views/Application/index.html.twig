@@ -1,0 +1,27 @@
+{# src/OC/PlatformBundle/Resources/views/Application/index.html.twig #}
+
+{% extends "OCPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+  Accueil - {{ parent() }}
+{% endblock %}
+
+{% block ocplatform_body %}
+
+  <h2>Liste des candidatures</h2>
+
+  <ul>
+    {% for application in listApplications %}
+      <li>
+        <a href="{{ path('oc_platform_view', {'id': application.id}) }}">
+        </a>
+        par {{ application.author }},
+        le {{ application.date|date('d/m/Y') }}, 
+        pour la candidature : {{ application.advert.title }}
+      </li>
+    {% else %}
+      <li>Pas (encore !) de candidatures</li>
+    {% endfor %}
+  </ul>
+
+{% endblock %}

@@ -32,3 +32,11 @@ oc_platform_delete:
         _controller: OCPlatformBundle:Advert:delete
     requirements:
         id: \d+
+        
+oc_platform_application_home:
+    path:      /application
+    defaults: 
+        _controller: OCPlatformBundle:Application:index
+        page:        1
+    requirements:
+        page: \d*

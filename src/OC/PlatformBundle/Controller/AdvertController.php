@@ -28,9 +28,11 @@ class AdvertController extends Controller {
                 ->getManager()
                 ->getRepository('OCPlatformBundle:Advert')
         ;
-
+        
         // Récupère la liste de toutes les annonces
-        $listAdverts = $repository->findAll();
+//        $listAdverts = $repository->findAll();
+        // Récuoère la liste des annonces selon certaines catégories
+        $listAdverts = $repository->getAdvertWithCategories(array('Intégration'));
 
         return $this->render('OCPlatformBundle:Advert:index.html.twig', array(
                     'listAdverts' => $listAdverts
