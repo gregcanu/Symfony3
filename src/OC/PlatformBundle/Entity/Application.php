@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Table(name="application")
  * @ORM\Entity(repositoryClass="OC\PlatformBundle\Repository\ApplicationRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Application {
 
@@ -39,6 +40,20 @@ class Application {
      * @ORM\JoinColumn(nullable=false)
      */
     private $advert;
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function increase() {
+        $this->getAdvert()->increaseApplication();
+    }
+
+    /**
+     * @ORM\PreRemove
+     */
+    public function decrease() {
+        $this->getAdvert()->decreaseApplication();
+    }
 
     public function __construct() {
         $this->date = new \Datetime();
@@ -78,7 +93,6 @@ class Application {
         return $this->date;
     }
 
-
     /**
      * Set advert
      *
@@ -86,8 +100,7 @@ class Application {
      *
      * @return Application
      */
-    public function setAdvert(\OC\PlatformBundle\Entity\Advert $advert)
-    {
+    public function setAdvert(\OC\PlatformBundle\Entity\Advert $advert) {
         $this->advert = $advert;
 
         return $this;
@@ -98,8 +111,8 @@ class Application {
      *
      * @return \OC\PlatformBundle\Entity\Advert
      */
-    public function getAdvert()
-    {
+    public function getAdvert() {
         return $this->advert;
     }
+
 }

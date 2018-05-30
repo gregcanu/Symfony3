@@ -6,6 +6,7 @@ namespace OC\PlatformBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use OC\PlatformBundle\Entity\Advert;
 use OC\PlatformBundle\Entity\Image;
@@ -28,7 +29,7 @@ class AdvertController extends Controller {
                 ->getManager()
                 ->getRepository('OCPlatformBundle:Advert')
         ;
-        
+
         // Récupère la liste de toutes les annonces
 //        $listAdverts = $repository->findAll();
         // Récuoère la liste des annonces selon certaines catégories
@@ -225,6 +226,20 @@ class AdvertController extends Controller {
         $em->flush();
 
         return $this->render('OCPlatformBundle:Advert:delete.html.twig');
+    }
+
+    public function testAction() {
+        $advert = new Advert();
+        $advert->setAuthor("Matt");
+        $advert->setTitle("Recherche développeur !");
+        $advert->setContent("Lalalallala");
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($advert);
+        $em->flush(); // C'est à ce moment qu'est généré le slug
+
+        return new Response('Slug généré : ' . $advert->getSlug());
+        // Affiche « Slug généré : recherche-developpeur »
     }
 
 }
