@@ -6,13 +6,26 @@ namespace OC\PlatformBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class AdvertRepository extends EntityRepository {
-    public function myFindAll() {
-        return $this->createQueryBuilder('a')
-                        ->getQuery()
-                        ->getResult()
+
+    public function getAdverts($page, $nbPerPage) {
+        $query = $this->createQueryBuilder('a')
+                ->leftJoin('a.image', 'i')
+                ->addSelect('i')
+                ->leftJoin('a.categories', 'c')
+                ->addSelect('c')
+                ->orderBy('a.date', 'DESC')
+                ->getQuery()
         ;
+
+        $query
+                ->setFirstResult(($page - 1) * $nbPerPage)
+                ->setMaxResults($nbPerPage)
+        ;
+
+        return new Paginator($query, true);
     }
 
     public function whereCurrentYear(QueryBuilder $qb) {
@@ -26,14 +39,14 @@ class AdvertRepository extends EntityRepository {
         $qb = $this->createQueryBuilder('a');
 
         $qb->where('a.author = :author')
-            ->setParameter('author', $author)
-            ->andWhere('a.date < :year')
-            ->setParameter('year', $year)
-            ->orderBy('a.date', 'DESC')
+                ->setParameter('author', $author)
+                ->andWhere('a.date < :year')
+                ->setParameter('year', $year)
+                ->orderBy('a.date', 'DESC')
         ;
 
         return $qb->getQuery()
-                  ->getResult()
+                        ->getResult()
         ;
     }
 
@@ -55,30 +68,29 @@ class AdvertRepository extends EntityRepository {
                         ->getResult()
         ;
     }
-    
+
     public function getAdvertWithApplications() {
         $qb = $this
-          ->createQueryBuilder('a')
-          ->leftJoin('a.applications', 'app')
-          ->addSelect('app')
+                ->createQueryBuilder('a')
+                ->leftJoin('a.applications', 'app')
+                ->addSelect('app')
         ;
 
         return $qb
-          ->getQuery()
-          ->getResult()
+                        ->getQuery()
+                        ->getResult()
         ;
     }
-    
+
     public function getAdvertWithCategories(array $categoryNames) {
         $qb = $this->createQueryBuilder('a')
                 ->innerJoin('a.categories', 'c')
                 ->addSelect('c')
-                ;
-        
+        ;
+
         $qb->where($qb->expr()->in('c.name', $categoryNames));
-                
+
         return $qb->getQuery()->getResult();
-                
     }
-    
+
 }
